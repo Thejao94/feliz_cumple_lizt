@@ -491,8 +491,8 @@ body {
 /*Mensaje*/
 .happy-birthday {
     position: absolute;
-    top: -108px; /* Ajusta la distancia vertical desde la torta */
-    left: 10%;
+    top: -480px; /* Ajusta la distancia vertical desde la torta */
+    left: 20%;
     transform: translateX(-50%);
     font-family: 'Pacifico', cursive;
     font-size: 30px;

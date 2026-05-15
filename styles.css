@@ -1,5 +1,10 @@
-html {
-  overflow: hidden; 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body {
@@ -7,46 +12,57 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
-/*Confeti Atras*/
-#canvas1 {
-  position: absolute; 
+#canvas1,
+#canvas2 {
+  position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
   display: block;
   pointer-events: none;
+}
+
+#canvas1 {
   z-index: 0;
 }
 
-/*Ajustamos para dejarlo en caida [contendor  de los objetos / mesa]*/
-.contenedor {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;    
+#canvas2 {
+  z-index: 2;
 }
 
-/* Portaretrato + torta + caja de regalo */
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(95vw, 1000px);
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  justify-content: center;
+  z-index: 1;
+}
+
 .portaretrato-torta-caja {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 520px;
-  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  gap: clamp(10px, 3vw, 30px);
   position: relative;
-  bottom: -50px;
+  flex-wrap: wrap;
 }
 
-/* Mesa */
 .soporte {
   position: relative;
-  width: 650px;
-  left: -20px;
-  bottom: -50px;
+  width: min(90vw, 650px);
   height: 20px;
   border-radius: 100px;
   background-color: #4A4A4A;
+  margin-top: 25px;
 }
 
 .soporte::before {
@@ -55,7 +71,7 @@ body {
   width: 100px;
   height: 1000px;
   background-color: #4A4A4A;
-  left: 195px;
+  left: 30%;
   top: 18px;
 }
 
@@ -66,12 +82,12 @@ body {
   width: 95px;
   height: 1000px;
   border-radius: 30px 30px 0 0;
-  left: 136px;
+  left: 21%;
   top: 20px;
   box-shadow: 125px 0 rgba(255, 182, 193, 1);
 }
 
-/*PortaRetrato*/
+/* Portaretrato */
 .portaretrato {
   position: relative;
   display: flex;
@@ -80,11 +96,11 @@ body {
 }
 
 .marco {
-  width: 160px;
-  height: 160px;
+  width: clamp(150px, 22vw, 240px);
+  aspect-ratio: 1 / 1;
   padding: 5px;
-  background-color: #bb7d4e; 
-  border: 5px solid #8a5e3c; 
+  background-color: #bb7d4e;
+  border: 5px solid #8a5e3c;
   box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
@@ -100,19 +116,21 @@ body {
 .soporte-marco {
   width: 50px;
   height: 15px;
-  background-color: #8a5e3c; 
+  background-color: #8a5e3c;
   margin-top: -5px;
   clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);
 }
 
-/*Torta De Cumpleaños*/
+/* Torta */
 .torta-cumpleaños {
   position: relative;
-  width: 274px;  /* mismo ancho que la torta */
-  height: 180px; /* espacio para torta + vela + llama */
+  width: 274px;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  transform: scale(clamp(0.65, 1vw + 0.7, 1));
+  transform-origin: bottom center;
 }
 
 .torta {
@@ -121,12 +139,12 @@ body {
   width: 274px;
   height: 140px;
   background-color: #FDE8C8;
-  bottom: 0; /* pegada abajo del contenedor */
-  left: 0; /* centrada horizontalmente */
+  bottom: 0;
+  left: 0;
   border-radius: 30px 30px 0 0;
 }
 
-.torta:before {
+.torta::before {
   content: "";
   position: absolute;
   background-color: #ff9393;
@@ -136,7 +154,7 @@ body {
   box-shadow: 0 30px #ff9393;
 }
 
-.torta:after {
+.torta::after {
   content: "";
   position: absolute;
   background-color: #ff5959;
@@ -153,7 +171,7 @@ body {
   left: 0;
   z-index: 1;
   border-radius: 50px;
-  box-shadow: 25px 2px #FDE8C8, 50px -10px #ff5959, 
+  box-shadow: 25px 2px #FDE8C8, 50px -10px #ff5959,
               75px -5px #FDE8C8, 100px 3px #ff5959,
               125px 0px #FDE8C8, 150px -5px #ff5959,
               175px 3px #FDE8C8, 200px -5px #ff5959,
@@ -165,22 +183,22 @@ body {
   width: 15px;
   height: 70px;
   background-color: white;
-  bottom: 140px; /* encima de la torta */
-  left: calc(50% - 7.5px); /* centrada */
+  bottom: 140px;
+  left: calc(50% - 7.5px);
   box-shadow: inset 0 -10px #FF6F61;
 }
 
-.vela:before {
+.vela::before {
   content: "";
   position: absolute;
   width: 15px;
   height: 15px;
   background-color: #FF6F61;
   top: 10px;
-  box-shadow: 0 25px #FF6F61; 
+  box-shadow: 0 25px #FF6F61;
 }
 
-.vela:after {
+.vela::after {
   content: "";
   position: absolute;
   width: 2px;
@@ -192,7 +210,7 @@ body {
 
 .llama {
   position: absolute;
-  bottom: 210px; /* encima de la vela */
+  bottom: 210px;
   left: calc(50% - 10px);
   width: 20px;
   height: 30px;
@@ -208,19 +226,18 @@ body {
 @keyframes flama {
   from {
     transform: scale(1, 1) translateY(0);
-    background: radial-gradient(ellipse at bottom, rgba(255, 255, 180, 1) 0%, rgba(255, 200, 0, 0.9) 50%, rgba(255, 120, 0, 0.6) 80%, transparent 100%);
   }
+
   50% {
     transform: scale(1.1, 1.2) translateY(-2px);
-    background: radial-gradient(ellipse at bottom, rgba(255, 255, 200, 1) 0%, rgba(255, 170, 0, 0.85) 50%, rgba(255, 80, 0, 0.5) 80%, transparent 100%);
   }
+
   to {
     transform: scale(0.9, 1.05) translateY(1px);
-    background: radial-gradient(ellipse at bottom, rgba(255, 250, 180, 1) 0%, rgba(255, 190, 0, 0.88) 50%, rgba(255, 90, 0, 0.55) 80%, transparent 100%);
   }
 }
 
-/*Todo Oscuro*/
+/* Oscuridad */
 .overlay {
   position: fixed;
   inset: 0;
@@ -229,33 +246,39 @@ body {
   z-index: 9999;
   transition: opacity 1.5s ease;
 }
+
 .overlay.hidden {
   opacity: 0;
   pointer-events: none;
 }
 
 @keyframes apagar {
-  from { transform: scale(1); opacity: 1; }
-  to { transform: scale(0); opacity: 0; }
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
 }
 
+/* Regalo */
 .caja-wrapper {
-  transform: scale(0.75);
-  transform-origin: center bottom; /* para que se reduzca hacia el centro y desde la base */
+  transform: scale(clamp(0.6, 1vw + 0.6, 0.9));
+  transform-origin: center bottom;
 }
 
-/*Regalo De Cumpleaños*/
 .caja {
   position: relative;
-  left: -30px;      
-  width: 160px; /* ancho del objeto */
-  height: 180px; /* alto total (caja + cinta + estrellas)*/
+  width: 160px;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
 
-/* Elementos de la caja */
 .cinta-de-regalo,
 .cinta-de-regalo-izquierda,
 .cinta-de-regalo-derecha,
@@ -267,7 +290,7 @@ body {
 }
 
 .cinta-de-regalo {
-  bottom: 100px; /* ajustado para que quede encima */
+  bottom: 100px;
   left: calc(50% - 17px);
   width: 34px;
   height: 23px;
@@ -283,7 +306,7 @@ body {
 
 .cinta-de-regalo-izquierda,
 .cinta-de-regalo-derecha {
-  box-shadow: 0 0 0 8px #fe3f3f inset; 
+  box-shadow: 0 0 0 8px #fe3f3f inset;
   top: 3.4px;
   width: 45px;
   height: 57px;
@@ -296,12 +319,17 @@ body {
   transform: rotate(35deg);
   transform-origin: 100% 15%;
 }
-.cinta-de-regalo-izquierda::before {
+
+.cinta-de-regalo-izquierda::before,
+.cinta-de-regalo-derecha::before {
   background-color: #fe3f3f;
   border-radius: inherit;
   content: "";
   position: absolute;
   inset: 0;
+}
+
+.cinta-de-regalo-izquierda::before {
   clip-path: polygon(0 42%, 100% 12%, 100% 100%, 0 100%);
 }
 
@@ -313,15 +341,9 @@ body {
 }
 
 .cinta-de-regalo-derecha::before {
-  background-color: #fe3f3f;
-  border-radius: inherit;
-  content: "";
-  position: absolute;
-  inset: 0;
   clip-path: polygon(0 12%, 100% 42%, 100% 100%, 0 100%);
 }
 
-/* Base de la caja */
 .regalos {
   animation: base 1.5s ease-in-out infinite;
   background: linear-gradient(#fe3f3f, #fe3f3f) 50% 50% / 32px 100% no-repeat, #e9e3e3;
@@ -355,152 +377,31 @@ body {
   border-radius: 10px;
 }
 
-/* Estrellas animadas */
 .icono-estrella {
   position: absolute;
   background-color: #fcff50;
   clip-path: polygon(50% 0, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0 50%, 35% 35%);
 }
 
-.estrella1 { animation: estrella1 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.5);  bottom: 20px;  left: 120px; width: 28px; height: 28px; }
-.estrella2 { animation: estrella2 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.125); top: 10px;   left: 100px; width: 28px; height: 28px; }
-.estrella3 { animation: estrella1 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.25);  top: 60px;   left: 50px;  width: 20px; height: 20px; }
-.estrella4 { animation: estrella2 1.5s ease-in-out infinite; bottom: 5px;  left: 20px;  width: 28px; height: 28px; }
-.estrella5 { animation: estrella2 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.375); top: 20px;   left: 20px;  width: 20px; height: 20px; }
+.estrella1 { animation: estrella1 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.5); bottom: 20px; left: 120px; width: 28px; height: 28px; }
+.estrella2 { animation: estrella2 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.125); top: 10px; left: 100px; width: 28px; height: 28px; }
+.estrella3 { animation: estrella1 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.25); top: 60px; left: 50px; width: 20px; height: 20px; }
+.estrella4 { animation: estrella2 1.5s ease-in-out infinite; bottom: 5px; left: 20px; width: 28px; height: 28px; }
+.estrella5 { animation: estrella2 1.5s ease-in-out infinite; animation-delay: calc(1.5s * 0.375); top: 20px; left: 20px; width: 20px; height: 20px; }
 
-/*Animaciones Regalo*/
-@keyframes cinta {
-  from,
-  50% {
-    transform: translateY(0) rotate(0);
-  }
-  62.5% {
-    transform: translateY(75%) rotate(0);
-  }
-  68.75% {
-    transform: translateY(-37.5%) rotate(15deg);
-  }
-  75% {
-    transform: translateY(-150%) rotate(5deg);
-  }
-  87.5% {
-    transform: translateY(65%) rotate(-3deg);
-  }
-  to {
-    transform: translateY(0) rotate(0);
-  }
-}
-
-@keyframes base {
-  from,
-  50% {
-    transform: translateY(0) scale(1, 1);
-  }
-  62.5% {
-    transform: translateY(4%) scale(1.12, 0.89);
-  }
-  75% {
-    transform: translateY(-11%) scale(0.92, 1.1);
-  }
-  87.5% {
-    transform: translateY(0%) scale(1.05, 0.9);
-  }
-  to {
-    transform: translateY(0) scale(1, 1);
-  }
-}
-
-@keyframes techo {
-  from,
-  50% {
-    transform: translateY(0) scale(1, 1) rotate(0);
-  }
-  62.5% {
-    animation-timing-function: ease-in;
-    transform: translateY(45%) scale(1.14, 0.95) rotate(0);
-  }
-  68.75% {
-    animation-timing-function: ease-out;
-    transform: translateY(-22.5%) scale(1.05, 1.03) rotate(15deg);
-  }
-  75% {
-    animation-timing-function: ease-out;
-    transform: translateY(-90%) scale(0.96, 1.1) rotate(5deg);
-  }
-  87.5% {
-    transform: translateY(30%) scale(1.12, 0.93) rotate(-3deg);
-  }
-  to {
-    transform: translateY(0) scale(1, 1) rotate(0);
-  }
-}
-
-@keyframes sombra {
-  from,
-  50% {
-    transform: translateY(0) scale(1, 1) rotate(0);
-  }
-  62.5% {
-    animation-timing-function: ease-in;
-    transform: translateY(10%) scale(1.14, 0.95) rotate(0);
-  }
-  68.75% {
-    animation-timing-function: ease-out;
-    transform: translateY(-10%) scale(1.05, 1.03) rotate(15deg);
-  }
-  75% {
-    animation-timing-function: ease-out;
-    transform: translateY(-30%) scale(0.96, 1.1) rotate(5deg);
-  }
-  87.5% {
-    transform: translateY(10%) scale(1.12, 0.93) rotate(-3deg);
-  }
-  to {
-    transform: translateY(0) scale(1, 1) rotate(0);
-  }
-}
-
-@keyframes estrella1 {
-  from {
-    transform: scale(0) rotate(0);
-  }
-  25% {
-    animation-timing-function: ease-out;
-    transform: scale(1) rotate(0.25turn);
-  }
-  50%,
-  to {
-    transform: scale(0) rotate(0.5turn);
-  }
-}
-
-@keyframes estrella2 {
-  from {
-    transform: scale(0) rotate(0);
-  }
-  25% {
-    animation-timing-function: ease-out;
-    transform: scale(1) rotate(-0.25turn);
-  }
-  50%,
-  to {
-    transform: scale(0) rotate(-0.5turn);
-  }
-}
-
-/*Mensaje*/
+/* Mensaje */
 .happy-birthday {
-    position: absolute;
-    top: -268px; /* Ajusta la distancia vertical desde la torta */
-    left: 20%;
-    transform: translateX(-50%);
-    font-family: 'Pacifico', cursive;
-    font-size: 30px;
-    color: #ff4d6d; 
-    user-select: none;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
-    animation: flotar 2s ease-in-out infinite,
-               brillo 1.5s infinite;
+  position: relative;
+  width: min(90vw, 800px);
+  margin-bottom: 30px;
+  text-align: center;
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(1.2rem, 3vw, 2.2rem);
+  line-height: 1.4;
+  color: #ff4d6d;
+  user-select: none;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+  animation: flotar 2s ease-in-out infinite, brillo 1.5s infinite;
 }
 
 /* Modal */
@@ -522,14 +423,12 @@ body {
   pointer-events: auto;
 }
 
-/*Carta*/
 .carta {
   background: linear-gradient(135deg, #ffeeee, #fbd5e4);
-  padding: 32px;
-  width: 400px;
-  max-width: 80%;
+  padding: clamp(20px, 5vw, 32px);
+  width: min(90vw, 400px);
   border-radius: 12px;
-  border: 3px solid #ffb6c1; 
+  border: 3px solid #ffb6c1;
   box-shadow: 0 0 25px rgba(255, 182, 193, 0.6);
   font-family: 'Georgia', serif;
   position: relative;
@@ -538,14 +437,14 @@ body {
 
 .carta h2 {
   font-family: cursive;
-  font-size: 28px;
-  color: #fd7e91; 
+  font-size: clamp(22px, 5vw, 28px);
+  color: #fd7e91;
   margin-bottom: 16px;
   text-align: center;
 }
 
 .carta p {
-  font-size: 17px;
+  font-size: clamp(15px, 4vw, 17px);
   line-height: 1.5;
   color: #333;
 }
@@ -557,45 +456,223 @@ body {
   color: #323232;
 }
 
-/* Animación de entrada */
+/* Animaciones */
 @keyframes aparecer {
   from {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-/* Animación flotante */
 @keyframes flotar {
-    from, to {
-        transform: translate(0, 0);
-    }
-    50% {
-        transform: translate(0, -8px);
-    }
+  from, to {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes brillo {
   from, to {
     text-shadow: 0 0 3px #fff, 0 0 6px #ff4d6d, 0 0 9px #ff4d6d;
   }
+
   50% {
     text-shadow: 0 0 6px #fff, 0 0 12px #ff4d6d, 0 0 18px #ff4d6d;
   }
 }
 
-/*Confeti Delante*/
-#canvas2 {
-  position: absolute; 
-  top: 0;
-  left: 0;
-  display: block;
-  z-index: 2;
-  pointer-events: none;
+@keyframes cinta {
+  from, 50% {
+    transform: translateY(0) rotate(0);
+  }
+
+  62.5% {
+    transform: translateY(75%) rotate(0);
+  }
+
+  68.75% {
+    transform: translateY(-37.5%) rotate(15deg);
+  }
+
+  75% {
+    transform: translateY(-150%) rotate(5deg);
+  }
+
+  87.5% {
+    transform: translateY(65%) rotate(-3deg);
+  }
+
+  to {
+    transform: translateY(0) rotate(0);
+  }
 }
 
+@keyframes base {
+  from, 50% {
+    transform: translateY(0) scale(1, 1);
+  }
 
+  62.5% {
+    transform: translateY(4%) scale(1.12, 0.89);
+  }
+
+  75% {
+    transform: translateY(-11%) scale(0.92, 1.1);
+  }
+
+  87.5% {
+    transform: translateY(0%) scale(1.05, 0.9);
+  }
+
+  to {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes techo {
+  from, 50% {
+    transform: translateY(0) scale(1, 1) rotate(0);
+  }
+
+  62.5% {
+    transform: translateY(45%) scale(1.14, 0.95) rotate(0);
+  }
+
+  68.75% {
+    transform: translateY(-22.5%) scale(1.05, 1.03) rotate(15deg);
+  }
+
+  75% {
+    transform: translateY(-90%) scale(0.96, 1.1) rotate(5deg);
+  }
+
+  87.5% {
+    transform: translateY(30%) scale(1.12, 0.93) rotate(-3deg);
+  }
+
+  to {
+    transform: translateY(0) scale(1, 1) rotate(0);
+  }
+}
+
+@keyframes sombra {
+  from, 50% {
+    transform: translateY(0) scale(1, 1) rotate(0);
+  }
+
+  62.5% {
+    transform: translateY(10%) scale(1.14, 0.95) rotate(0);
+  }
+
+  68.75% {
+    transform: translateY(-10%) scale(1.05, 1.03) rotate(15deg);
+  }
+
+  75% {
+    transform: translateY(-30%) scale(0.96, 1.1) rotate(5deg);
+  }
+
+  87.5% {
+    transform: translateY(10%) scale(1.12, 0.93) rotate(-3deg);
+  }
+
+  to {
+    transform: translateY(0) scale(1, 1) rotate(0);
+  }
+}
+
+@keyframes estrella1 {
+  from {
+    transform: scale(0) rotate(0);
+  }
+
+  25% {
+    transform: scale(1) rotate(0.25turn);
+  }
+
+  50%, to {
+    transform: scale(0) rotate(0.5turn);
+  }
+}
+
+@keyframes estrella2 {
+  from {
+    transform: scale(0) rotate(0);
+  }
+
+  25% {
+    transform: scale(1) rotate(-0.25turn);
+  }
+
+  50%, to {
+    transform: scale(0) rotate(-0.5turn);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contenedor {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .portaretrato-torta-caja {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .marco {
+    width: clamp(180px, 65vw, 280px);
+  }
+
+  .torta-cumpleaños {
+    transform: scale(0.82);
+  }
+
+  .caja-wrapper {
+    transform: scale(0.75);
+  }
+
+  .soporte {
+    height: 14px;
+    margin-top: 10px;
+  }
+
+  .soporte::before,
+  .soporte::after {
+    display: none;
+  }
+
+  .happy-birthday {
+    margin-bottom: 20px;
+    font-size: clamp(1rem, 6vw, 1.8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .marco {
+    width: 70vw;
+  }
+
+  .torta-cumpleaños {
+    transform: scale(0.72);
+  }
+
+  .caja-wrapper {
+    transform: scale(0.65);
+  }
+
+  .happy-birthday {
+    width: 95vw;
+    font-size: 1.15rem;
+  }
+}
